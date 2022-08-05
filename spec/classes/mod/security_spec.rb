@@ -140,6 +140,12 @@ describe 'apache::mod::security', type: :class do
               {
                 paranoia_level: 1,
                 executing_paranoia_level: 2,
+                enable_exclusions_cpanel: true,
+                enable_exclusions_drupal: false,
+                enable_exclusions_dokuwiki: true,
+                enable_exclusions_nextcloud: false,
+                enable_exclusions_wordpress: true,
+                enable_exclusions_xenforo: false,
               }
             end
 
@@ -148,6 +154,21 @@ describe 'apache::mod::security', type: :class do
                 %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
               is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=2"$}
+              is_expected.to contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900130,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:tx.crs_exclusions_cpanel=1,\\\n
+                  \s+setvar:tx.crs_exclusions_drupal=0,\\\n
+                  \s+setvar:tx.crs_exclusions_dokuwiki=1,\\\n
+                  \s+setvar:tx.crs_exclusions_nextcloud=0,\\\n
+                  \s+setvar:tx.crs_exclusions_wordpress=1,\\\n
+                  \s+setvar:tx.crs_exclusions_xenforo=0"$
+              }x
             }
           end
 
@@ -302,6 +323,12 @@ describe 'apache::mod::security', type: :class do
               {
                 paranoia_level: 1,
                 executing_paranoia_level: 1,
+                enable_exclusions_cpanel: true,
+                enable_exclusions_drupal: false,
+                enable_exclusions_dokuwiki: true,
+                enable_exclusions_nextcloud: false,
+                enable_exclusions_wordpress: true,
+                enable_exclusions_xenforo: false,
               }
             end
 
@@ -310,6 +337,21 @@ describe 'apache::mod::security', type: :class do
                 %r{^SecAction \\\n\s+\"id:900000,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.paranoia_level=1"$}
               is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
                 %r{^SecAction \\\n\s+\"id:900001,\\\n\s+phase:1,\\\n\s+nolog,\\\n\s+pass,\\\n\s+t:none,\\\n\s+setvar:tx.executing_paranoia_level=1"$}
+              is_expected.to contain_file('/etc/modsecurity/security_crs.conf').with_content \
+                %r{
+                  ^SecAction\ \\\n
+                  \s+\"id:900130,\\\n
+                  \s+phase:1,\\\n
+                  \s+nolog,\\\n
+                  \s+pass,\\\n
+                  \s+t:none,\\\n
+                  \s+setvar:tx.crs_exclusions_cpanel=1,\\\n
+                  \s+setvar:tx.crs_exclusions_drupal=0,\\\n
+                  \s+setvar:tx.crs_exclusions_dokuwiki=1,\\\n
+                  \s+setvar:tx.crs_exclusions_nextcloud=0,\\\n
+                  \s+setvar:tx.crs_exclusions_wordpress=1,\\\n
+                  \s+setvar:tx.crs_exclusions_xenforo=0"$
+              }x
             }
           end
 

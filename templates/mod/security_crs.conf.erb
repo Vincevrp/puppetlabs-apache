@@ -350,18 +350,18 @@ SecAction \
 #
 # Modify and uncomment this rule to select which application:
 #
-#SecAction \
-# "id:900130,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.crs_exclusions_cpanel=1,\
-#  setvar:tx.crs_exclusions_drupal=1,\
-#  setvar:tx.crs_exclusions_dokuwiki=1,\
-#  setvar:tx.crs_exclusions_nextcloud=1,\
-#  setvar:tx.crs_exclusions_wordpress=1,\
-#  setvar:tx.crs_exclusions_xenforo=1"
+SecAction \
+ "id:900130,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.crs_exclusions_cpanel=<%= @enable_exclusions_cpanel ? 1 : 0 %>,\
+  setvar:tx.crs_exclusions_drupal=<%= @enable_exclusions_drupal ? 1 : 0 %>,\
+  setvar:tx.crs_exclusions_dokuwiki=<%= @enable_exclusions_dokuwiki ? 1 : 0 %>,\
+  setvar:tx.crs_exclusions_nextcloud=<%= @enable_exclusions_nextcloud ? 1 : 0 %>,\
+  setvar:tx.crs_exclusions_wordpress=<%= @enable_exclusions_wordpress ? 1 : 0 %>,\
+  setvar:tx.crs_exclusions_xenforo=<%= @enable_exclusions_xenforo ? 1 : 0 %>"
 
 #
 # -- [[ HTTP Policy Settings ]] ------------------------------------------------

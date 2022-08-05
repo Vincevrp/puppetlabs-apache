@@ -104,6 +104,24 @@
 # @param manage_security_crs
 #   Toggles whether to manage ModSecurity Core Rule Set 
 #
+# @param enable_exclusions_cpanel
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for cPanel
+#
+# @param enable_exclusions_drupal
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for Drupal
+#
+# @param enable_exclusions_dokuwiki
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for DokuWiki
+#
+# @param enable_exclusions_nextcloud
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for Nextcloud
+#
+# @param enable_exclusions_wordpress
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for WordPress
+#
+# @param enable_exclusions_xenforo
+#   Enable OWASP ModSecurity Core Rule Set exclusion rules for XenForo
+#
 # @see https://github.com/SpiderLabs/ModSecurity/wiki for additional documentation.
 #
 class apache::mod::security (
@@ -141,6 +159,12 @@ class apache::mod::security (
   Enum['On', 'Off'] $secrequestbodyaccess               = 'On',
   Enum['On', 'Off'] $secresponsebodyaccess              = 'Off',
   Boolean $manage_security_crs                          = true,
+  Boolean $enable_exclusions_cpanel                      = false,
+  Boolean $enable_exclusions_drupal                      = false,
+  Boolean $enable_exclusions_dokuwiki                    = false,
+  Boolean $enable_exclusions_nextcloud                   = false,
+  Boolean $enable_exclusions_wordpress                   = false,
+  Boolean $enable_exclusions_xenforo                     = false,
 ) inherits apache::params {
   include apache
 
@@ -278,6 +302,12 @@ class apache::mod::security (
     # - $restricted_extensions
     # - $restricted_headers
     # - $secrequestmaxnumargs
+    # - $enable_exclusions_cpanel
+    # - $enable_exclusions_drupal
+    # - $enable_exclusions_dokuwiki
+    # - $enable_exclusions_nextcloud
+    # - $enable_exclusions_wordpress
+    # - $enable_exclusions_xenforo
     file { "${modsec_dir}/security_crs.conf":
       ensure  => file,
       content => template('apache/mod/security_crs.conf.erb'),
